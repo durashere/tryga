@@ -182,5 +182,5 @@ def main_game_loop():
 
 # title_screen()
 # title_screen_choices()
-main_game_loop()
-setup_game()
+# main_game_loop()
+# setup_game()
