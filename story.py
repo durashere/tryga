@@ -2,35 +2,53 @@ import os
 import sys
 import time
 from player import player
+from npcs import NPCS
 
 screen_width = 80
 #### Introduction ####
 
 
+def speak(person, text):
+    new_text = ''
+    counter = 0
+    if len(text) > screen_width:
+        for char in text:
+            new_text += char
+            counter += 1
+            if counter >= screen_width-10 and char == ' ':
+                new_text += '\u2502'.rjust(screen_width-counter) + '\n\u2502 '
+                counter = 0
+        item = new_text
+        item_end = '\u2502'.rjust(screen_width-counter)
+    else:
+        item = text
+        item_end = '\u2502'
+
+    print('\u250C' + '\u2500' * screen_width + '\u2510')
+    print('\u2502 ' + person.capitalize().ljust(screen_width-1) + '\u2502')
+    print('\u251C' + '\u2500' * screen_width + '\u2524')
+    print('\u2502 ' + item.ljust(screen_width-1) + item_end)
+    print('\u2514' + '\u2500' * screen_width + '\u2518')
+    time.sleep(2)
+
+
+def speak2(text):
+    speech = text + '\n'
+    for char in speech:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(0.001)
+
+
 def setup_game():
+    fisherman = NPCS['FISHERMAN'].name
+
     os.system('clear')
-
-    def speak(person, text):
-        speech = '[' + person.capitalize() + ']: ' + text + '\n\n'
-        for char in speech:
-            sys.stdout.write(char)
-            sys.stdout.flush()
-            time.sleep(0.02)
-
-    def speak2(text):
-        speech = text + '\n'
-        for char in speech:
-            sys.stdout.write(char)
-            sys.stdout.flush()
-            time.sleep(0.001)
 
     #### Story intro ####
 
-    speak('voice', 'You are sailing across the great ocean in searching for big treasure.\n\
-         When you are on the straight line to you goal, a storm suddenly arrives.\n\
-         The crew are asking you to turn back, but you are so close, that something inside telling you to ignore them.\n\
-         You decide to push forward and flow into the middle of the striking thunders!')
-    time.sleep(1)
+    speak('voice', 'You are sailing across the great ocean in searching for big treasure. When you are on the straight line to you goal, a storm suddenly arrives. The crew are asking you to turn back, but you are so close, that something inside telling you to ignore them. You decide to push forward and flow into the middle of the striking thunders!')
+
     speak('voice', 'Clouds and darkness surround you...')
 
     os.system('clear')
@@ -46,33 +64,31 @@ def setup_game():
 
     time.sleep(3)
 
+    os.system('clear')
+
     #### Name defining ####
     speak('stranger', 'Hello, you finally woke up. What should I call you?')
-    player_name = input(' > ')
-    player.name = player_name.capitalize()
+    player_name = input('\n > ')
     print()
+    player.name = player_name.capitalize()
     speak('you', player.name + ', and you?')
-    speak('NPC1', 'I\'m NPC1, nice to meet you.')
+    speak(fisherman, 'I\'m ' + fisherman + ', nice to meet you.')
     speak('you', 'Where I am? I can\'t remember anything!')
-    speak('NPC1', 'You are in my fishing hut, as you can see I\'m a fisherman.\n\
-        I found you three day\'s ago on the beach and I took you there.')
+    speak(fisherman, 'You are in my fishing hut, as you can see I\'m a fisherman. I found you three day\'s ago on the beach and I took you there.')
 
     #### Profession defining ####
-    speak('stranger', player.name + ', what\'s your profession?\n\
-            You have three choices:\n\
-            - Warrior\n\
-            - Mage\n\
-            - Ranger')
+    speak(fisherman, player.name + ', what\'s your profession? You have three choices: [Warrior], [Mage] and [Ranger]')
 
     while True:
         player_job = input('\n > ')
+        print()
         valid_jobs = ['warrior', 'mage']
         if player_job.lower() in valid_jobs:
             player.job = player_job
-            speak('stranger', 'You are now a ' + player_job + '!\n')
+            speak(fisherman, 'You are now a ' + player_job + '!')
             break
         else:
-            speak('stranger', '\n Unknown profession.\nTry again.\n')
+            speak(fisherman, 'Unknown profession. Try again.')
 
     #### Stats defining ####
     if player.job == 'warrior':
@@ -85,3 +101,6 @@ def setup_game():
     print(player.job)
     print(player.hp)
     print(player.mp)
+
+
+setup_game()

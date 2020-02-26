@@ -11,6 +11,7 @@ import time
 import random
 ##### Self imports #####
 from player import player
+from npcs import NPCS
 import zones
 from zones import ZONES
 import story
@@ -105,4 +106,4 @@ def main_game_loop():
 # title_screen()
 # title_screen_choices()
 # main_game_loop()
-story.setup_game()
+# story.setup_game()

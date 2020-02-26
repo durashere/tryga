@@ -47,11 +47,14 @@ ZONES['none'] = Zone('', '', '', {'up': ' ', 'right': '', 'down': ' ', 'left': '
 ZONES['TOWN_MARKET'] = Zone('Town', 'Market', 'The center of trade.',
                             {'up': ' ', 'right': ' ', 'down': ' ', 'left': 'TOWN_CASTLE'})
 ZONES['TOWN_CASTLE'] = Zone('Town', 'Castle', 'The king place.',
-                            {'up': ' ', 'right': 'TOWN_MARKET', 'down': ' ', 'left': ' '})
+                            {'up': 'BEACH_FISHERMANS_HUT', 'right': 'TOWN_MARKET', 'down': ' ', 'left': ' '})
 
 
-minimap1 = ['TOWN_CASTLE', 'TOWN_MARKET', 'none', 'none', 'none']
-minimap2 = ['none', 'none', 'none', 'none', 'none']
+ZONES['BEACH_FISHERMANS_HUT'] = Zone('Beach', 'Fisherman\'s Hut', 'This is where the fishes comes from',
+                                     {'up': ' ', 'right': ' ', 'down': 'TOWN_CASTLE', 'left': 'TOWN_CASTLE'})
+
+minimap1 = ['BEACH_FISHERMANS_HUT', 'none', 'none', 'none', 'none']
+minimap2 = ['TOWN_CASTLE', 'TOWN_MARKET', 'none', 'none', 'none']
 minimap3 = ['none', 'none', 'none', 'none', 'none']
 minimap4 = ['none', 'none', 'none', 'none', 'none']
 minimap5 = ['none', 'none', 'none', 'none', 'none']
